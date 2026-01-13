@@ -55,7 +55,11 @@ export function Journal({ onSubmit }: JournalProps): ReactElement {
       <button
         className="primary"
         type="button"
-        onClick={() => onSubmit({ text, emojis: selected })}
+        onClick={() => {
+          onSubmit({ text, emojis: selected });
+          setText("");
+          setSelected([]);
+        }}
         disabled={!canSubmit}
       >
         Déposer

@@ -1,6 +1,6 @@
 export type PromptPayload = {
-  present: string[];
-  resource: string[];
+  selected: string[];
+  relations: string[];
   memoryCount: number;
 };
 
@@ -34,24 +34,26 @@ function pick<T>(items: T[], seed: number): T {
 }
 
 export function generatePrompt(payload: PromptPayload): string {
-  const presentText = payload.present.length
-    ? `présent : ${payload.present.join(", ")}`
-    : "présent : sensation ouverte";
-  const resourceText = payload.resource.length
-    ? `ressource : ${payload.resource.join(", ")}`
-    : "ressource : appui simple";
+  const selectedText = payload.selected.length
+    ? payload.selected.join(", ")
+    : "aucun élément explicite";
+  const relationText = payload.relations.length
+    ? payload.relations.join(" · ")
+    : "aucune relation explicite";
 
-  const seed = payload.present.join("").length + payload.resource.join("").length;
+  const seed = payload.selected.join("").length;
 
   const opener = pick(PROMPT_OPENERS, seed + payload.memoryCount);
   const guide = pick(PROMPT_GUIDES, seed + payload.memoryCount * 2);
   const closer = pick(PROMPT_CLOSERS, seed + payload.memoryCount * 3);
 
   return [
-    `${opener}.`,
-    `Dans cette scène, laisse apparaître ${presentText} et ${resourceText}.`,
-    `Sans analyser, ${guide}.`,
-    "Si une image symbolique se forme, décris-la simplement.",
+    "Rôle de l'IA : IA externe, accompagnant non directif, attentif et descriptif.",
+    "Cadre éthique : aucune analyse, aucun diagnostic, aucune explication imposée.",
+    `Configuration symbolique actuelle : ${selectedText}.`,
+    `Relations notées dans le graphe : ${relationText}.`,
+    `${opener}. ${guide}.`,
+    "Invite une forme symbolique ouverte (texte, image mentale ou scène).",
     closer,
   ].join(" ");
 }
