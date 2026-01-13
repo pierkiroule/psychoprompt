@@ -59,8 +59,9 @@ export function Journal({ onSubmit }: JournalProps): ReactElement {
           ) : (
             <span className="active-theme muted">Aucun thème sélectionné</span>
           )}
+          <span className="helper theme-swipe">Glisse horizontalement pour explorer.</span>
         </div>
-        <div className="theme-grid" role="list">
+        <div className="theme-scroll" role="list">
           {THEME_PACKS.map((theme) => {
             const isActive = theme.id === activeThemeId;
             return (

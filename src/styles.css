@@ -112,10 +112,19 @@ button:disabled {
   color: #7a7267;
 }
 
-.theme-grid {
+.theme-swipe {
+  font-size: 0.85rem;
+}
+
+.theme-scroll {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: 10px;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(180px, 1fr);
+  gap: 12px;
+  overflow-x: auto;
+  padding-bottom: 6px;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
 }
 
 .theme-card {
@@ -127,7 +136,8 @@ button:disabled {
   display: flex;
   flex-direction: column;
   gap: 6px;
-  min-height: 110px;
+  min-height: 120px;
+  scroll-snap-align: start;
 }
 
 .theme-card.active {
