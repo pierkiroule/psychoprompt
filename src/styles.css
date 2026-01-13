@@ -88,20 +88,124 @@ button:disabled {
   color: #5f5a52;
 }
 
+.theme-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 16px;
+  background: #f6f1e7;
+}
+
+.theme-header {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.active-theme {
+  font-size: 0.9rem;
+  color: #2f5f4b;
+}
+
+.active-theme.muted {
+  color: #7a7267;
+}
+
+.theme-swipe {
+  font-size: 0.85rem;
+}
+
+.theme-scroll {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(180px, 1fr);
+  gap: 12px;
+  overflow-x: auto;
+  padding-bottom: 6px;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+.theme-card {
+  border-radius: 16px;
+  padding: 12px;
+  text-align: left;
+  background: #fff;
+  border: 1px solid transparent;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-height: 120px;
+  scroll-snap-align: start;
+}
+
+.theme-card.active {
+  border-color: #2f5f4b;
+  box-shadow: 0 6px 16px rgba(47, 95, 75, 0.15);
+}
+
+.theme-emoji {
+  font-size: 1.4rem;
+}
+
+.theme-label {
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.theme-description {
+  font-size: 0.85rem;
+  color: #6a6359;
+}
+
 .emoji-grid {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 8px;
 }
 
 .emoji {
   background: #f3efe7;
   font-size: 1.3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: center;
+  justify-content: center;
+  min-height: 78px;
+  text-align: center;
+  padding: 10px 8px;
+}
+
+.emoji .emoji-symbol {
+  font-size: 1.4rem;
+}
+
+.emoji .emoji-title {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #3d3a35;
+}
+
+.emoji .emoji-theme {
+  font-size: 0.72rem;
+  color: #6a6359;
 }
 
 .emoji.active {
   background: #2f5f4b;
   color: #fff;
+}
+
+.emoji.active .emoji-title,
+.emoji.active .emoji-theme {
+  color: #fff;
+}
+
+.emoji.disabled {
+  background: #eee9df;
+  color: #9b9488;
 }
 
 .constellation {
@@ -228,32 +332,18 @@ button:disabled {
   font-weight: 600;
 }
 
+@media (max-width: 720px) {
+  .emoji-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 @media (max-width: 480px) {
   .panel {
     padding: 20px;
   }
 
   .emoji-grid {
-    grid-template-columns: repeat(4, 1fr);
-  }
-}
-
-@media (min-width: 820px) {
-  .graph-layout {
-    min-height: calc(100vh - 32px);
-  }
-
-  .graph-panel {
-    min-height: 70vh;
-  }
-
-  .graph-controls {
-    flex-direction: row;
-    align-items: flex-start;
-  }
-
-  .graph-controls .panel,
-  .selection-status {
-    flex: 1;
+    grid-template-columns: repeat(1, 1fr);
   }
 }
