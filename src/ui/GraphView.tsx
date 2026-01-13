@@ -8,6 +8,7 @@ import {
 } from "d3-force";
 import { useEffect, useMemo, useRef, useState, type ReactElement } from "react";
 import type { GraphEdge, GraphNode } from "../core/graph";
+import { getThemeForEmoji } from "./themePacks";
 
 type GraphViewProps = {
   nodes: GraphNode[];
@@ -17,6 +18,7 @@ type GraphViewProps = {
 };
 
 type SimNode = SimulationNodeDatum & GraphNode;
+
 type SimLink = SimulationLinkDatum<SimNode> & { count: number };
 
 const VIEWBOX_SIZE = 1000;
@@ -137,6 +139,8 @@ export function GraphView({ nodes, edges, selection, onToggle }: GraphViewProps)
               {renderedNodes.map((node) => {
                 const isSelected = selection.includes(node.id);
                 const radius = Math.min(38, 16 + node.count * 2.4);
+                const theme = node.type === "emoji" ? getThemeForEmoji(node.label) : undefined;
+                const themeFill = theme?.color ?? "#efe8dc";
                 return (
                   <g
                     key={node.id}
@@ -150,7 +154,7 @@ export function GraphView({ nodes, edges, selection, onToggle }: GraphViewProps)
                   >
                     <circle
                       r={radius}
-                      fill={isSelected ? "#2f5f4b" : "#efe8dc"}
+                      fill={isSelected ? "#2f5f4b" : themeFill}
                       stroke={isSelected ? "#1e3b2d" : "#d5cdbf"}
                       strokeWidth={isSelected ? 3 : 1}
                       opacity={Math.min(1, 0.45 + node.count * 0.08)}
