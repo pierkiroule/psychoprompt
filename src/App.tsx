@@ -97,37 +97,51 @@ export function App(): ReactElement {
       case "main":
         return (
           <section className="graph-layout">
-            <GraphView
-              nodes={nodes}
-              edges={edges}
-              selection={selection}
-              onToggle={toggleSelection}
-            />
-            <section className="graph-controls">
-              <div className="selection-status">
-                <h3>Sélection symbolique</h3>
-                <p className="helper">Sélectionne ce qui résonne pour toi maintenant.</p>
-                <p className="helper">
-                  {selection.length} sélectionné{selection.length > 1 ? "s" : ""} (entre{" "}
-                  {MIN_SELECTION} et {MAX_SELECTION}).
-                </p>
-                <div className="button-row">
-                  <button
-                    className="primary"
-                    type="button"
-                    onClick={handleGenerate}
-                    disabled={selection.length < MIN_SELECTION}
-                  >
-                    Générer le psychoprompt
-                  </button>
-                  <button type="button" className="secondary" onClick={handleReset}>
-                    Effacer la sélection
-                  </button>
-                </div>
+            <div className="carousel-header">
+              <h2>Navigation</h2>
+              <p className="helper">Glisse horizontalement pour passer d&apos;une étape à l&apos;autre.</p>
+            </div>
+            <div className="carousel-track" role="list">
+              <div className="carousel-card carousel-card--wide" role="listitem">
+                <GraphView
+                  nodes={nodes}
+                  edges={edges}
+                  selection={selection}
+                  onToggle={toggleSelection}
+                />
               </div>
-              <Journal onSubmit={handleDeposit} />
-              {prompt ? <PromptView prompt={prompt} onClear={() => setPrompt("")} /> : null}
-            </section>
+              <div className="carousel-card" role="listitem">
+                <section className="selection-status">
+                  <h3>Sélection symbolique</h3>
+                  <p className="helper">Sélectionne ce qui résonne pour toi maintenant.</p>
+                  <p className="helper">
+                    {selection.length} sélectionné{selection.length > 1 ? "s" : ""} (entre{" "}
+                    {MIN_SELECTION} et {MAX_SELECTION}).
+                  </p>
+                  <div className="button-row">
+                    <button
+                      className="primary"
+                      type="button"
+                      onClick={handleGenerate}
+                      disabled={selection.length < MIN_SELECTION}
+                    >
+                      Générer le psychoprompt
+                    </button>
+                    <button type="button" className="secondary" onClick={handleReset}>
+                      Effacer la sélection
+                    </button>
+                  </div>
+                </section>
+              </div>
+              <div className="carousel-card" role="listitem">
+                <Journal onSubmit={handleDeposit} />
+              </div>
+              {prompt ? (
+                <div className="carousel-card" role="listitem">
+                  <PromptView prompt={prompt} onClear={() => setPrompt("")} />
+                </div>
+              ) : null}
+            </div>
           </section>
         );
       default:
