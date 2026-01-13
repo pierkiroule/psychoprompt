@@ -3,55 +3,51 @@ import type { GraphNode } from "../core/graph";
 
 type SelectionViewProps = {
   nodes: GraphNode[];
-  present: string[];
-  resource: string[];
-  onTogglePresent: (label: string) => void;
-  onToggleResource: (label: string) => void;
+  selection: string[];
+  minSelection: number;
+  maxSelection: number;
+  onToggle: (label: string) => void;
   onGenerate: () => void;
 };
 
 export function SelectionView({
   nodes,
-  present,
-  resource,
-  onTogglePresent,
-  onToggleResource,
+  selection,
+  minSelection,
+  maxSelection,
+  onToggle,
   onGenerate,
 }: SelectionViewProps): ReactElement {
-  const canGenerate = present.length > 0 && resource.length > 0;
+  const canGenerate = selection.length >= minSelection && selection.length <= maxSelection;
 
   const message = useMemo(() => {
     if (!nodes.length) {
       return "Le graphe est vide. Dépose un journal d'abord.";
     }
-    return "Choisis 1–2 éléments pour le présent et 1–2 pour la direction / ressource.";
+    return "Sélectionne ce qui résonne pour toi maintenant.";
   }, [nodes.length]);
 
   return (
     <section className="panel">
       <h2>Sélection projective</h2>
       <p className="helper">{message}</p>
+      <p className="helper">
+        {selection.length} sélectionné{selection.length > 1 ? "s" : ""} (entre{" "}
+        {minSelection} et {maxSelection}).
+      </p>
       <div className="selection-grid">
         {nodes.map((node) => {
-          const isPresent = present.includes(node.label);
-          const isResource = resource.includes(node.label);
+          const isSelected = selection.includes(node.label);
           return (
             <div key={node.id} className="selection-item">
               <div className="label">{node.label}</div>
               <div className="toggle-row">
                 <button
                   type="button"
-                  className={isPresent ? "pill active" : "pill"}
-                  onClick={() => onTogglePresent(node.label)}
+                  className={isSelected ? "pill active" : "pill"}
+                  onClick={() => onToggle(node.label)}
                 >
-                  Présent
-                </button>
-                <button
-                  type="button"
-                  className={isResource ? "pill active" : "pill"}
-                  onClick={() => onToggleResource(node.label)}
-                >
-                  Ressource
+                  Résonne
                 </button>
               </div>
             </div>

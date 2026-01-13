@@ -1,6 +1,6 @@
 import { useMemo, useState, type ReactElement } from "react";
 import { extractSignificantWords } from "./core/extractor";
-import { addDeposit, listNodes, loadGraph, saveGraph, type GraphNode } from "./core/graph";
+import { addDeposit, listNodes, loadGraph, saveGraph } from "./core/graph";
 import { generatePrompt } from "./core/psychoprompt";
 import { GraphView } from "./ui/GraphView";
 import { Intro } from "./ui/Intro";
@@ -10,20 +10,13 @@ import "./styles.css";
 
 type ViewState = "intro" | "journal" | "graph" | "selection" | "prompt";
 
-type SelectionState = {
-  present: string[];
-  resource: string[];
-};
-
-const MAX_SELECTION = 2;
+const MAX_SELECTION = 5;
+const MIN_SELECTION = 2;
 
 export function App(): ReactElement {
   const [view, setView] = useState<ViewState>("intro");
   const [graph, setGraph] = useState(() => loadGraph());
-  const [selection, setSelection] = useState<SelectionState>({
-    present: [],
-    resource: [],
-  });
+  const [selection, setSelection] = useState<string[]>([]);
   const [prompt, setPrompt] = useState("");
 
   const nodes = useMemo(() => listNodes(graph), [graph]);
@@ -40,39 +33,27 @@ export function App(): ReactElement {
     setView("graph");
   };
 
-  const toggleSelection = (
-    label: string,
-    key: keyof SelectionState,
-    otherKey: keyof SelectionState
-  ) => {
+  const toggleSelection = (label: string) => {
     setSelection((prev) => {
-      const current = prev[key];
-      const other = prev[otherKey];
-      if (current.includes(label)) {
-        return { ...prev, [key]: current.filter((item) => item !== label) };
+      if (prev.includes(label)) {
+        return prev.filter((item) => item !== label);
       }
-      if (current.length >= MAX_SELECTION) {
+      if (prev.length >= MAX_SELECTION) {
         return prev;
       }
-      return {
-        ...prev,
-        [key]: [...current, label],
-        [otherKey]: other.filter((item) => item !== label),
-      };
+      return [...prev, label];
     });
   };
 
   const handleGenerate = () => {
     const nextPrompt = generatePrompt({
-      present: selection.present,
-      resource: selection.resource,
+      selected: selection,
       memoryCount: graph.totalDeposits,
     });
 
     const words: string[] = [];
     const emojis: string[] = [];
-    const all = [...selection.present, ...selection.resource];
-    all.forEach((label) => {
+    selection.forEach((label) => {
       const type = labelTypeMap.get(label);
       if (type === "emoji") {
         emojis.push(label);
@@ -89,7 +70,7 @@ export function App(): ReactElement {
   };
 
   const handleReset = () => {
-    setSelection({ present: [], resource: [] });
+    setSelection([]);
     setPrompt("");
     setView("journal");
   };
@@ -106,10 +87,10 @@ export function App(): ReactElement {
         return (
           <SelectionView
             nodes={nodes}
-            present={selection.present}
-            resource={selection.resource}
-            onTogglePresent={(label) => toggleSelection(label, "present", "resource")}
-            onToggleResource={(label) => toggleSelection(label, "resource", "present")}
+            selection={selection}
+            minSelection={MIN_SELECTION}
+            maxSelection={MAX_SELECTION}
+            onToggle={toggleSelection}
             onGenerate={handleGenerate}
           />
         );
