@@ -1,5 +1,5 @@
 import { useMemo, useState, type ReactElement } from "react";
-import { EMOJIS, THEME_PACKS, getThemeForEmoji } from "./themePacks";
+import { EMOJIS, THEME_PACKS, getThemeEmoji, getThemeForEmoji } from "./themePacks";
 
 type JournalProps = {
   onSubmit: (payload: { text: string; emojis: string[] }) => void;
@@ -34,7 +34,7 @@ export function Journal({ onSubmit }: JournalProps): ReactElement {
     if (!activeTheme) {
       return true;
     }
-    return activeTheme.emojiIds.includes(emoji);
+    return activeTheme.emojis.some((entry) => entry.emoji === emoji);
   };
 
   return (
@@ -74,8 +74,7 @@ export function Journal({ onSubmit }: JournalProps): ReactElement {
               >
                 <span className="theme-emoji">{theme.emoji}</span>
                 <span className="theme-label">{theme.label}</span>
-                <span className="theme-description">{theme.description}</span>
-                <span className="theme-helper">{theme.helper}</span>
+                <span className="theme-description">{theme.anchor}</span>
               </button>
             );
           })}
@@ -86,6 +85,7 @@ export function Journal({ onSubmit }: JournalProps): ReactElement {
           const isActive = selected.includes(emoji);
           const isEnabled = canUseEmoji(emoji);
           const theme = getThemeForEmoji(emoji);
+          const themeEmoji = getThemeEmoji(emoji);
           return (
             <button
               key={emoji}
@@ -108,8 +108,9 @@ export function Journal({ onSubmit }: JournalProps): ReactElement {
               disabled={!isEnabled}
             >
               <span className="emoji-symbol">{emoji}</span>
+              <span className="emoji-title">{themeEmoji?.title}</span>
               <span className="emoji-theme" style={{ color: theme?.color }}>
-                {theme?.label}
+                {themeEmoji?.caMe}
               </span>
             </button>
           );

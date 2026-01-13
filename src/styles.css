@@ -127,7 +127,7 @@ button:disabled {
   display: flex;
   flex-direction: column;
   gap: 6px;
-  min-height: 120px;
+  min-height: 110px;
 }
 
 .theme-card.active {
@@ -149,14 +149,9 @@ button:disabled {
   color: #6a6359;
 }
 
-.theme-helper {
-  font-size: 0.82rem;
-  color: #2f5f4b;
-}
-
 .emoji-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 8px;
 }
 
@@ -165,24 +160,36 @@ button:disabled {
   font-size: 1.3rem;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 4px;
   align-items: center;
   justify-content: center;
-  min-height: 64px;
+  min-height: 78px;
+  text-align: center;
+  padding: 10px 8px;
 }
 
 .emoji .emoji-symbol {
   font-size: 1.4rem;
 }
 
+.emoji .emoji-title {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #3d3a35;
+}
+
 .emoji .emoji-theme {
   font-size: 0.72rem;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
+  color: #6a6359;
 }
 
 .emoji.active {
   background: #2f5f4b;
+  color: #fff;
+}
+
+.emoji.active .emoji-title,
+.emoji.active .emoji-theme {
   color: #fff;
 }
 
@@ -317,7 +324,7 @@ button:disabled {
 
 @media (max-width: 720px) {
   .emoji-grid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
@@ -327,6 +334,6 @@ button:disabled {
   }
 
   .emoji-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(1, 1fr);
   }
 }
