@@ -1,0 +1,176 @@
+:root {
+  font-family: "Inter", system-ui, sans-serif;
+  color: #1f1f1f;
+  background: #f6f4f0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: #f6f4f0;
+}
+
+.app {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.panel {
+  width: min(480px, 100%);
+  background: #fffaf3;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 16px 40px rgba(31, 31, 31, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+h1,
+h2 {
+  margin: 0;
+  font-weight: 600;
+}
+
+p {
+  margin: 0;
+  line-height: 1.5;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+textarea {
+  width: 100%;
+  resize: vertical;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid #d7d1c8;
+  font-size: 1rem;
+  background: #fff;
+}
+
+button {
+  border: none;
+  padding: 12px 16px;
+  border-radius: 999px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.primary {
+  background: #2f5f4b;
+  color: #fff;
+}
+
+.secondary {
+  background: #e5dfd5;
+  color: #2a2a2a;
+}
+
+.helper {
+  font-size: 0.95rem;
+  color: #5f5a52;
+}
+
+.emoji-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 8px;
+}
+
+.emoji {
+  background: #f3efe7;
+  font-size: 1.3rem;
+}
+
+.emoji.active {
+  background: #2f5f4b;
+  color: #fff;
+}
+
+.constellation {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.node {
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: #efe8dc;
+}
+
+.empty {
+  padding: 16px;
+  background: #f3efe7;
+  border-radius: 12px;
+  color: #6a6359;
+}
+
+.selection-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.selection-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+  border-radius: 12px;
+  background: #f3efe7;
+}
+
+.toggle-row {
+  display: flex;
+  gap: 8px;
+}
+
+.pill {
+  background: #e7e0d6;
+  color: #2f2f2f;
+  padding: 6px 12px;
+  font-size: 0.9rem;
+}
+
+.pill.active {
+  background: #2f5f4b;
+  color: #fff;
+}
+
+.prompt {
+  min-height: 200px;
+}
+
+.button-row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 480px) {
+  .panel {
+    padding: 20px;
+  }
+
+  .emoji-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
