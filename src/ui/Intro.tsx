@@ -9,10 +9,10 @@ export function Intro({ onStart }: IntroProps): ReactElement {
     <section className="panel">
       <h1>Psychoprompt</h1>
       <p>
-        Un carnet intime et projectif. Un espace symbolique pour déposer ce qui
-        traverse et nourrir un inconscient archétypal vivant.
+        Un espace projectif où un graphe symbolique se construit à partir de tes
+        mots et de tes emojis.
       </p>
-      <p>Ce n&apos;est pas une app d&apos;IA. C&apos;est une médiation douce.</p>
+      <p>Ce n&apos;est pas une app d&apos;IA. C&apos;est une médiation douce et locale.</p>
       <button className="primary" type="button" onClick={onStart}>
         Commencer
       </button>

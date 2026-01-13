@@ -122,3 +122,7 @@ export function addDeposit(
 export function listNodes(state: GraphState): GraphNode[] {
   return Object.values(state.nodes).sort((a, b) => b.count - a.count);
 }
+
+export function listEdges(state: GraphState): GraphEdge[] {
+  return Object.values(state.edges).sort((a, b) => b.count - a.count);
+}

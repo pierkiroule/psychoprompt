@@ -1,5 +1,6 @@
 export type PromptPayload = {
   selected: string[];
+  relations: string[];
   memoryCount: number;
 };
 
@@ -36,6 +37,9 @@ export function generatePrompt(payload: PromptPayload): string {
   const selectedText = payload.selected.length
     ? payload.selected.join(", ")
     : "aucun élément explicite";
+  const relationText = payload.relations.length
+    ? payload.relations.join(" · ")
+    : "aucune relation explicite";
 
   const seed = payload.selected.join("").length;
 
@@ -47,6 +51,7 @@ export function generatePrompt(payload: PromptPayload): string {
     "Rôle de l'IA : IA externe, accompagnant non directif, attentif et descriptif.",
     "Cadre éthique : aucune analyse, aucun diagnostic, aucune explication imposée.",
     `Configuration symbolique actuelle : ${selectedText}.`,
+    `Relations notées dans le graphe : ${relationText}.`,
     `${opener}. ${guide}.`,
     "Invite une forme symbolique ouverte (texte, image mentale ou scène).",
     closer,
